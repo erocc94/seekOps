@@ -1,3 +1,4 @@
+import './Row.css';
 import React from "react";
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -16,6 +17,14 @@ const Row = (props) => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
 //console.log("rowwwwwwwwwwwwwwwwwwww",row)
+    const setSeverityColor = (sev)=>{
+        if(sev === 'low')return 'low-color';
+        if(sev === 'medium')return 'med-color';
+        if(sev === 'high')return 'high-color';
+        if(sev === 'critical')return 'critical-color';
+    }
+
+
     return (
         <React.Fragment>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -48,7 +57,7 @@ const Row = (props) => {
                             <Typography variant="h6" gutterBottom component="div">
                                 Raw Findings
                             </Typography>
-                            <Table size="small" aria-label="purchases">
+                            <Table aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>severity</TableCell>
@@ -63,13 +72,13 @@ const Row = (props) => {
                                     {row && row.raw_findings.map((rawRow, key) => (
                                         <TableRow key={rawRow.id.toString() + key.toString()}>
                                             <TableCell component="th" scope="row">
-                                                {rawRow.severity}
+                                                <label className={'severity-outline ' + setSeverityColor(rawRow.severity)}>{rawRow.severity}</label>
                                             </TableCell>
                                             <TableCell>{rawRow.finding_created}</TableCell>
-                                            <TableCell align="right">{rawRow.source_security_tool_name}</TableCell>
-                                            <TableCell align="right">{rawRow.description}</TableCell>
-                                            <TableCell align="right">{rawRow.asset}</TableCell>
-                                            <TableCell align="right">{rawRow.status}</TableCell>
+                                            <TableCell align="left">{rawRow.source_security_tool_name}</TableCell>
+                                            <TableCell align="left">{rawRow.description}</TableCell>
+                                            <TableCell align="left">{rawRow.asset}</TableCell>
+                                            <TableCell align="left">{rawRow.status}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

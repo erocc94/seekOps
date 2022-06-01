@@ -1,0 +1,21 @@
+.severity-outline {
+    display: table; /* keep the background color wrapped tight */
+    margin: 0px .5em 0px .5em; /* keep the table centered */
+    //background-color:green;
+    color:#ffffff;
+    width:6em;
+    text-align: center;
+    border-radius: 5px;
+}
+.low-color{
+    background-color:#99cb15;
+}
+.med-color{
+    background-color:#a2a6ed;
+}
+.high-color{
+    background-color: #ffc300;
+}
+.critical-color{
+    background-color:#ff4100;
+}

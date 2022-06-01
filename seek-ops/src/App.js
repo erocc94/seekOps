@@ -5,18 +5,13 @@ import grouped_findings from './data/grouped_findings.json'
 import raw_findings from './data/raw_findings.json'
 import DataTable from "./modules/Table/DataTable";
 
-function App() {
-    const groupedData = grouped_findings;
-    const rawData = raw_findings;
-    //console.log("grouped findings", typeof groupedData)
-   // console.log("raw findings",rawData)
-
+const App = () => {
 
   return (
     <div className="App">
-        <DataTable/>
+        <DataTable rawData={raw_findings} groupedData={grouped_findings}/>
     </div>
   );
-}
+};
 
 export default App;

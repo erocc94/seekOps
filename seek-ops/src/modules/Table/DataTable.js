@@ -1,7 +1,5 @@
 import './DataTable.css';
-import React, {useEffect, useState} from "react";
-import grouped_findings from '../../data/grouped_findings.json'
-import raw_findings from '../../data/raw_findings.json'
+import React, {useEffect, useRef, useState} from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,45 +8,75 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Row from './SharedRow/Row'
+import SharedModal from "../../shared/SharedModal/SharedModal";
+import PieChartIcon from '@mui/icons-material/PieChart';
 
-const DataTable = () => {
+const DataTable = (props) => {
+    const { rawData, groupedData } = props;
 
     const [rows, setRows] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
+    const [pieChartSeriesData, setPieChartSeriesData] = useState([]);
+
     let tmpRows = [];
 
+    const isComponentAlive = useRef(true);
+    const isAlive = () => isComponentAlive.current;
+
+    // when component unmounts, set ref to false -
+    // use ref to avoid memory leaks around async code.
+    useEffect(() => () => (isComponentAlive.current = false), []);
 
     useEffect(()=>{
+        if (!isAlive()) return;
+        let low = 0;
+        let med = 0;
+        let high = 0;
+        let critical = 0;
 
-        for(let i=0;i < raw_findings.length; i++){
+        for(let i=0;i < rawData.length; i++){
             //console.log("raw_findings[i]",raw_findings[i])
-            let groupedId = raw_findings[i].grouped_finding_id;
-            console.log("i: ",i)
-            console.log("hello",groupedId)
-            let tmp = grouped_findings[groupedId - 1];
+            let groupedId = rawData[i].grouped_finding_id;
+            //console.log("i: ",i)
+            //console.log("hello",groupedId)
+            let tmp = groupedData[groupedId - 1];
             //console.log("tmp",tmp)
 
             if(tmp.raw_findings){
-                tmp.raw_findings.push(raw_findings[i])
+                tmp.raw_findings.push(rawData[i])
             }else{
-                tmp.raw_findings = [raw_findings[i]];
+                tmp.raw_findings = [rawData[i]];
             }
-            console.log("tmp after",tmp)
+           // console.log("tmp after",tmp)
 
             // console.log("tmp object:",tmp)
             tmpRows.push(tmp);
-            console.log("tmpRows tmpRows",tmpRows)
+           /// console.log("tmpRows tmpRows",tmpRows)
 
         }
-         console.log("tmp length:",tmpRows.length)
-
         setRows(tmpRows);
-         //console.log("rows object:",rows)
+
+        for(let i=0;i < groupedData.length; i++){
+            let severity = groupedData[i].severity;
+            console.log("sevvvvv",severity)
+            if(severity==='low')low++;
+            if(severity==='medium')med++;
+            if(severity==='high')high++;
+            if(severity==='critical')critical++;
+        }
+       // pieChartSeriesData.push(low,med,high,critical)
+        setPieChartSeriesData([low,med,high,critical]);
 
     },[])
+    console.log("final pieChartSeriesData",pieChartSeriesData)
 
     return (
         <TableContainer component={Paper}>
-            <h1 style={{textAlign: 'left'}}>Group Findings</h1>
+            <div style={{textAlign: 'left'}}>
+                <label className={'header-text'}>Group Findings</label>
+                <PieChartIcon className={'pie-chart'} onClick={()=> setOpenModal(true)}/>
+            </div>
+            {openModal && <SharedModal series={pieChartSeriesData} open={openModal} handleClose={()=>setOpenModal(false)}/>}
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
@@ -66,8 +94,8 @@ const DataTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <Row key={row.id} row={row} />
+                    {rows.map((row,key) => (
+                        <Row key={row.id.toString() + ' '+ key.toString()} row={row} />
                     ))}
                 </TableBody>
             </Table>

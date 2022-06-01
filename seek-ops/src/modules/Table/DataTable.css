@@ -1,3 +1,12 @@
 .table-container {
   margin: auto;
 }
+.header-text {
+  font-size: 3em;
+}
+.pie-chart:hover {
+  cursor: pointer;
+}
+.pie-chart {
+  padding-left: 1em;
+}
