@@ -8,6 +8,7 @@ import Chart from 'react-apexcharts'
 const SharedModal = (props) => {
     const { open , handleClose , series} = props;
 
+    //options object to pass through to the pie chart component
     const options = {
         colors: ['#99cb15', '#a2a6ed', '#ffc300', '#ff4100'],
         chart: {
@@ -38,8 +39,9 @@ const SharedModal = (props) => {
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
-        p: 4,
+        p: 4
     };
+
     return (
         <Modal
             open={open}

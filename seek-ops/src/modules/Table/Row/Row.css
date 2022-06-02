@@ -1,7 +1,5 @@
 .severity-outline {
-    display: table; /* keep the background color wrapped tight */
-    margin: 0px .5em 0px .5em; /* keep the table centered */
-    //background-color:green;
+    display: table;
     color:#ffffff;
     width:6em;
     text-align: center;
@@ -18,4 +16,20 @@
 }
 .critical-color{
     background-color:#ff4100;
+}
+.open-color{
+    background-color:#ffc300;
+}
+.fixed-color{
+    background-color:green;
+}
+.inProgress-color{
+    background-color: dodgerblue;
+}
+.table-width{
+    width: 130%;
+}
+.raw-findings-text {
+    margin: 1.5em;
+    color: gray;
 }

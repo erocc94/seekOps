@@ -16,18 +16,23 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 const Row = (props) => {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
-//console.log("rowwwwwwwwwwwwwwwwwwww",row)
+
+    //return css classname to set correct color for each type of data value
     const setSeverityColor = (sev)=>{
         if(sev === 'low')return 'low-color';
         if(sev === 'medium')return 'med-color';
         if(sev === 'high')return 'high-color';
         if(sev === 'critical')return 'critical-color';
-    }
-
+    };
+    const setStatusColor = (sev)=>{
+        if(sev === 'open')return 'open-color';
+        if(sev === 'fixed')return 'fixed-color';
+        if(sev === 'in_progress')return 'inProgress-color';
+    };
 
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableRow sx={{ minWidth: 55555 }}>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -52,7 +57,7 @@ const Row = (props) => {
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Collapse className={'table-width'} in={open}>
                         <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
                                 Raw Findings
@@ -60,12 +65,12 @@ const Row = (props) => {
                             <Table aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>severity</TableCell>
-                                        <TableCell align="left">time</TableCell>
-                                        <TableCell align="left">source</TableCell>
-                                        <TableCell align="left">description</TableCell>
-                                        <TableCell align="left">asset</TableCell>
-                                        <TableCell>status</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="center">severity</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="left">time</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="left">source</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="left">description</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="left">asset</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="center">status</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -78,12 +83,17 @@ const Row = (props) => {
                                             <TableCell align="left">{rawRow.source_security_tool_name}</TableCell>
                                             <TableCell align="left">{rawRow.description}</TableCell>
                                             <TableCell align="left">{rawRow.asset}</TableCell>
-                                            <TableCell align="left">{rawRow.status}</TableCell>
+                                            <TableCell align="left">
+                                                <label className={'severity-outline ' + setStatusColor(rawRow.status)}>
+                                                    {rawRow.status}
+                                                </label>
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
                         </Box>
+                        <div className='raw-findings-text'>table containing raw findings</div>
                     </Collapse>
                 </TableCell>
             </TableRow>
