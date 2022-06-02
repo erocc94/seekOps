@@ -65,12 +65,12 @@ const Row = (props) => {
                             <Table aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{fontWeight:'bold'}} align="center">severity</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="left">severity</TableCell>
                                         <TableCell sx={{fontWeight:'bold'}} align="left">time</TableCell>
                                         <TableCell sx={{fontWeight:'bold'}} align="left">source</TableCell>
                                         <TableCell sx={{fontWeight:'bold'}} align="left">description</TableCell>
                                         <TableCell sx={{fontWeight:'bold'}} align="left">asset</TableCell>
-                                        <TableCell sx={{fontWeight:'bold'}} align="center">status</TableCell>
+                                        <TableCell sx={{fontWeight:'bold'}} align="left">status</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
